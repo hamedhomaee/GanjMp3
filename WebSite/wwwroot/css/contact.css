@@ -1,0 +1,46 @@
+#contact {
+    font-size: 1.3rem;
+    border: 1px solid #3e3e3e;
+    margin-top: 2em;
+}
+
+#contact h3,
+#contact form {
+    padding: .8rem;
+}
+
+#contact h3 {
+    font-size: 1.8rem;
+}
+
+#contact label {
+    font-size: 1.4rem;
+}
+
+#contact-form input {
+    border: 1px solid rgb(109, 109, 109);
+    font-weight: normal;
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    color: #3e3e3e;
+}
+
+#contact-form textarea {
+    font-size: 1.3rem;
+    font-family: main-font;
+}
+
+#contact-form div {
+    margin-top: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+#contact-form-submit {
+    padding: 0.3rem 2.5rem;
+    border: 0;
+    background-color: aliceblue;
+    font-family: main-font !important;
+    color: black !important;
+    cursor: pointer;
+}

@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/main.min.css">
+    <link rel="stylesheet" href="~/css/layout.css">
+    <title>اشعار صوتی و یادداشت‌های گنج حضور</title>
+    <script src="https://kit.fontawesome.com/2e4b7451de.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    @RenderSection("Styles", required: false)
+</head>
+
+<body>
+    <div id="main-nav" class="x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-column">
+        <div class="s1-width-100 s1-display-flex-row">
+            <nav id="nav-links"
+                class="s1-display-none m1-display-flex-row m1-margin-left-auto s1-text-decoration-none s1-align-self-end s1-justify-content-start">
+                <a id="home-link" href="/">خانه</a>
+                <a href="https://www.parvizshahbazi.com" target="_blank">سایت اصلی گنج حضور</a>
+                <a href="/contact">تماس با ما</a>
+            </nav>
+            <nav id="mobile-menu"
+                class="s1-display-block m1-display-none s1-margin-left-auto s1-text-decoration-none s1-align-self-center">
+                <div id="nav-links-mobile" class="">
+                    <i id="burger-menu" class="fas fa-bars"></i>
+                </div>
+            </nav>
+            <div id="logo" class="s1-margin-right-auto s1-align-self-end">
+                <a id="site-logo" href="/">
+                    <img src="~/images/logo.png" alt="Website Logo">
+                </a>
+            </div>
+        </div>
+        <div id="mobile-menu-items" class="s1-width-100 s1-display-flex-column s1-align-items-center">
+            <div class="s1-display-flex-row s1-align-items-center">
+                <a href="/">خانه</a>
+            </div>
+            <div class="s1-display-flex-row s1-align-items-center">
+                <a href="https://www.parvizshahbazi.com" target="_blank">سایت اصلی گنج حضور</a>
+            </div>
+            <div class="s1-display-flex-row s1-align-items-center">
+                <a href="/contact">تماس با ما</a>
+            </div>
+        </div>
+    </div>
+
+    @RenderBody()
+    <script>
+        $(document).ready(function () {
+            var open = false;
+            var mainNavHeight = getHeight($("#main-nav"));
+            var mobileMenuHeight = getHeight("#mobile-menu-items");
+            var firstNavHeight = mainNavHeight - mobileMenuHeight;
+            $("#main-nav").css("height", firstNavHeight);
+
+            $("#mobile-menu-items").hide();
+
+            $("#main-nav").on("click", "#burger-menu", function () {
+                if (!open) {
+                    $("#mobile-menu-items").show();
+                    $("#main-nav").css("height", mainNavHeight);
+                    open = open ? false : true;
+                } else {
+                    $("#main-nav").css("height", firstNavHeight);
+                    setTimeout(function () {
+                        $("#mobile-menu-items").hide();
+                    }, 500)
+                    open = open ? false : true;
+                }
+            });
+        });
+
+        function getHeight(element) {
+            return parseInt($(element).css("height").slice(0, 6)) + 1;
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+@page "/contact"
+@model IndexModel
+
+@section Styles {
+<link rel="stylesheet" href="~/css/contact.css">
+}
+
+<section id="contact" class="x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-column">
+    <h3 class="s1-align-self-center">
+        با استفاده از فرم زیر پیغام خود را با ما در میان بگذارید.
+    </h3>
+    <form method="post" id="contact-form" 
+        class="m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-row s1-justify-content-center s1-flex-wrap">
+        <div class="s1-width-90 m2-width-70 s1-display-flex-row s1-justify-content-start s1-align-items-center s1-align-self-center">
+            <div class="l2-width-20 s1-width-40">
+                <label asp-for="Message!.Email">@Html.DisplayNameFor(model =>
+                    model.Message!.Email)</label>
+            </div>
+            <div class="m1-width-30 s1-width-60">
+                <input asp-for="Message!.Email" class="s1-width-100" />
+            </div>
+        </div>
+        <div class="s1-width-90 m2-width-70 s1-display-flex-row s1-justify-content-space-between s1-align-items-center s1-align-self-center">
+            <div class="l2-width-20 m1-width-40">
+                <label asp-for="Message!.Message">@Html.DisplayNameFor(model =>
+                    model.Message!.Message)</label>
+            </div>
+            <div class="l2-width-80 m1-width-60 s1-width-60">
+                <textarea asp-for="Message!.Message" class="s1-width-100 s1-resize-vertical" minlength="20"></textarea>
+            </div>
+        </div>
+        <div class="s1-width-100 s1-display-flex-row s1-justify-content-center s1-align-items-center account-button">
+            <input type="submit" id="contact-form-submit" value="ارسال">
+        </div>
+    </form>
+</section>

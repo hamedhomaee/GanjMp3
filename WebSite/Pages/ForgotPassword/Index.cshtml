@@ -1,0 +1,25 @@
+@page "/forgotpassword"
+@model IndexModel
+
+@section Styles {
+<link rel="stylesheet" href="/css/forgotpassword.css">
+}
+
+<section id="forgot-password"
+    class="l2-width-50 m2-width-70 s1-width-90 s1-margin-auto s1-display-flex-row s1-justify-content-center s1-flex-wrap s1-text-align-justify">
+    <h3>
+        برای بازیابی کلمه‌عبور، ایمیل خود را که در هنگام ثبت‌نام استفاده کرده‌اید در زیر وارد کنید.
+    </h3>
+    <form method="post" id="forgot-password-form" class="s1-width-90 s1-display-flex-column">
+        <div class="s1-width-100 s1-display-flex-row s1-justify-content-center s1-align-items-center account-button">
+            <input class="l2-width-30 s1-width-90" asp-for="Model!.Email">
+        </div>
+        <div class="s1-width-100 s1-display-flex-row s1-justify-content-center s1-align-items-center account-button">
+            <input type="submit" id="forgot_password_submit" value="ارسال">
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+<script src="~/js/forgot-password.js"></script>
+}

@@ -1,0 +1,63 @@
+@font-face {
+    font-family: main-font;
+    src: url("/fonts/bcompset.ttf");
+}
+
+body {
+    font-family: main-font, sans-serif;
+    background-image: url("/images/background-image.jpg");
+    background-repeat: repeat;
+}
+
+#main-nav {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #3e3e3e;
+    overflow: hidden;
+    transition: height .5s;
+}
+
+#nav-links {
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+#nav-links a {
+    color: #3e3e3e;
+    margin-left: 2em;
+    transition: all .2s;
+}
+
+#nav-links a:hover {
+    color: #8d8d8d;
+    margin-left: 2em;
+}
+
+#burger-menu {
+    font-size: 3rem;
+    cursor: pointer;
+    color: #414141;
+}
+
+#mobile-menu-items {
+    margin-top: 1rem;
+}
+
+#mobile-menu-items div {
+    width: 100%;
+    padding: 1rem 0;
+    border: 1px solid black;
+    background-color: rgba(141, 141, 141, .3);
+}
+
+#mobile-menu-items div:nth-child(2) {
+    border-top: 0;
+    border-bottom: 0;
+}
+
+#mobile-menu-items div a {
+    text-decoration: none;
+    margin: 0 auto;
+    font-size: 1.3rem;
+    color: black;
+}

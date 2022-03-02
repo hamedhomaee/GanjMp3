@@ -1,0 +1,12 @@
+.vscode/
+WebApi/bin
+WebApi/obj
+WebSite/bin
+WebSite/obj
+ganjmp3website-c85312db656d.json
+WebSite/wwwroot/AudioFiles/*
+WebSite/wwwroot/uploads/*
+WebSite/Databases/*
+WebApi/Databases/*
+WebSite/wwwroot/*.mp3
+WebSite/pages/OnlyHamedAccess/

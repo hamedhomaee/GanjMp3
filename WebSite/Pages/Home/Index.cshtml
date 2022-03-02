@@ -1,0 +1,198 @@
+@page "/"
+@using Model
+@model IndexModel
+
+@section Styles {
+<link rel="stylesheet" href="/css/home.css">
+}
+
+<section id="preamble"
+    class="x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-row s1-justify-content-center l1-justify-content-space-between s1-flex-wrap s1-text-align-justify">
+    <h3>در این وب‌سایت با استفاده از حساب کاربری خود می‌توانید برای هر برنامه‌ی گنج حضور مطلبی یادداشت کنید و آن را یا
+        به طور عمومی در اختیار دیگران قرار دهید و یا به صورت خصوصی تنها برای خود نگهداری کنید.</h3>
+    <h3>در این وب‌سایت بدون نیاز به حساب کاربری می‌توانید شعر هر برنامه را که در اول برنامه توسط استاد شهبازی خوانده شده
+        به صورت <span class="mp3">MP3</span> دانلود کنید. این امکان نیز وجود دارد که چندین شعر را به هم اتصال دهید و در
+        یک فایل <span class="mp3">MP3</span> دریافت کنید و همینطور به صورت پس‌زمینه آهنگی قرار دهید.</h3>
+</section>
+
+<section id="mp3-download"
+    class="x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-column s1-justify-content-center s1-align-items-center">
+    <h3 class="s1-width-70 s1-text-align-center">شماره برنامه مورد نظر را در زیر وارد کنید. برای الصاق چندین برنامه،
+        شماره‌ها را با فاصله <span class="mp3">(space)</span> جدا کنید.</h3>
+    <form method="post" class="s1-width-70 s1-display-flex-column" enctype="multipart/form-data">
+        <textarea id="episodes" class="s1-resize-vertical s1-width-100"></textarea>
+        <h3 class="s1-width-100 s1-text-align-center">برای اضافه کردن آهنگ پس‌زمینه، فایل <span class="mp3">MP3</span>
+            را در زیر آپلود کنید.</h3>
+        <div class="s1-width-100 s1-display-flex-column m2-display-flex-row s1-justify-content-center s1-align-self-center"
+            style="margin-top: 1rem;">
+            <label id="mp3file-label" class="sign-button s1-align-self-center s1-text-align-center">
+                <input class="s1-display-none" id="user-audiofile" type="file" accept="audio/mpeg">
+                انتخاب فایل
+            </label>
+            <h3 id="file-name" class="s1-align-self-center">هیچ فایلی انتخاب نشده</h3>
+        </div>
+        <div class="s1-width-100 s1-display-flex-row s1-justify-content-center s1-align-items-center"
+            style="margin-top: 3rem;">
+            <input class="s1-align-self-center" type="submit" value="دریافت فایل صوتی" id="generate-audio">
+            <div id="loader" class="loader"></div>
+            <div id="loader-text" style="margin-right: 1rem;">لطفا منتظر بمانید</div>
+        </div>
+    </form>
+</section>
+
+@{
+    if (HttpContext.User.Identity!.IsAuthenticated)
+    {
+        <section id="go-to-portal"
+        class="x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-column s1-justify-content-center s1-align-items-center">
+            <a asp-page="/Portal/Index" id="enter-text-button" class="m2-width-20 s1-width-50 s1-text-decoration-none-self">
+                ورود به پرتال
+            </a>
+            <form method="post" asp-page="/SignOut/Index">
+                <input id="sign-out" type="submit" value="خروج از حساب">
+            </form>
+        </section>
+    }
+    else
+    {
+        <section id="account"
+        class="x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-row s1-justify-content-center l1-justify-content-space-between s1-flex-wrap">
+            <form method="post" id="signup-form" class="l2-width-40 s1-width-100 s1-display-flex-column">
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-center s1-align-items-center">
+                    <h3 style="font-size: larger;">ساخت حساب کاربری</h3>
+                </div>
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-start s1-align-items-center">
+                    <div class="s1-width-30">
+                        <label asp-for="ViewModel!.SignUp!.UserName">@Html.DisplayNameFor(model =>
+                    model!.ViewModel!.SignUp!.UserName)</label>
+                    </div>
+                    <div class="s1-width-70">
+                        <input asp-for="ViewModel!.SignUp!.UserName" class="s1-width-100" />
+                    </div>
+                </div>
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-start s1-align-items-center">
+                    <div class="s1-width-30">
+                        <label asp-for="ViewModel!.SignUp!.Email">@Html.DisplayNameFor(model =>
+                    model!.ViewModel!.SignUp!.Email)</label>
+                    </div>
+                    <div class="s1-width-70">
+                        <input asp-for="ViewModel!.SignUp!.Email" class="s1-width-100" />
+                    </div>
+                </div>
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-start s1-align-items-center">
+                    <div class="s1-width-30">
+                        <label asp-for="ViewModel!.SignUp!.ConfirmEmail">@Html.DisplayNameFor(model =>
+                    model!.ViewModel!.SignUp!.ConfirmEmail)</label>
+                    </div>
+                    <div class="s1-width-70">
+                        <input asp-for="ViewModel!.SignUp!.ConfirmEmail" class="s1-width-100" />
+                    </div>
+                </div>
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-start s1-align-items-center">
+                    <div class="s1-width-30">
+                        <label asp-for="ViewModel!.SignUp!.Password">@Html.DisplayNameFor(model =>
+                    model!.ViewModel!.SignUp!.Password)</label>
+                    </div>
+                    <div class="s1-width-70">
+                        <input asp-for="ViewModel!.SignUp!.Password" class="s1-width-100" />
+                    </div>
+                </div>
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-start s1-align-items-center">
+                    <div class="s1-width-30">
+                        <label asp-for="ViewModel!.SignUp!.ConfirmPassword">@Html.DisplayNameFor(model =>
+                    model!.ViewModel!.SignUp!.ConfirmPassword)</label>
+                    </div>
+                    <div class="s1-width-70">
+                        <input asp-for="ViewModel!.SignUp!.ConfirmPassword" class="s1-width-100" />
+                    </div>
+                </div>
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-center s1-align-items-center account-button">
+                    <input class="sign-button" type="submit" value="ارسال" id="signup-button">
+                </div>
+            </form>
+            <form method="post" id="signin-form" class="l2-width-40 s1-width-100 s1-display-flex-column">
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-center s1-align-items-center">
+                    <h3 style="font-size: larger;">ورود به حساب کاربری</h3>
+                </div>
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-start s1-align-items-center">
+                    <div class="s1-width-30">
+                        <label asp-for="ViewModel!.SignIn!.NameOrEmail">@Html.DisplayNameFor(model =>
+                    model!.ViewModel!.SignIn!.NameOrEmail)</label>
+                    </div>
+                    <div class="s1-width-70">
+                        <input asp-for="ViewModel!.SignIn!.NameOrEmail" class="s1-width-100" />
+                    </div>
+                </div>
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-start s1-align-items-center">
+                    <div class="s1-width-30">
+                        <label asp-for="ViewModel!.SignIn!.Password">@Html.DisplayNameFor(model =>
+                    model!.ViewModel!.SignIn!.Password)</label>
+                    </div>
+                    <div class="s1-width-70">
+                        <input asp-for="ViewModel!.SignIn!.Password" class="s1-width-100" />
+                    </div>
+                </div>
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-start s1-align-items-center">
+                    <div class="s1-width-30">
+                        <label asp-for="ViewModel!.SignIn!.IsPersistent">@Html.DisplayNameFor(model =>
+                    model!.ViewModel!.SignIn!.IsPersistent)</label>
+                    </div>
+                    <div class="s1-width-70 s1-display-flex-row s1-align-items-center">
+                        <input id="remember-me" asp-for="ViewModel!.SignIn!.IsPersistent" />
+                    </div>
+                </div>
+                <div class="s1-width-100 s1-display-flex-row s1-justify-content-center s1-align-items-center account-button">
+                    <input class="sign-button" type="submit" id="signin-button" value="ورود">
+                </div>
+                <div id="forgot-password"
+                class="s1-width-100 s1-display-flex-row s1-justify-content-center s1-align-items-center">
+                    <a class="s1-text-decoration-none-self" asp-page="/ForgotPassword/Index">بازیابی کلمه عبور</a>
+                </div>
+            </form>
+        </section>
+    }
+}
+
+@{
+    if (Model.ViewModel!.PublicNotes != null && Model.ViewModel!.PublicNotes.Any())
+    {
+        <section id="welcome"
+        class="x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-column s1-justify-content-center s1-align-items-center">
+            آخرین متون کاربران
+        </section>
+        foreach (Note note in Model.ViewModel.PublicNotes.Reverse())
+        {
+            <section
+        class="user-notes x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-column s1-justify-content-center s1-align-items-center">
+                <div class="s1-text-align-justify s1-width-100">@Html.Raw(note.Content!.Replace("\n", "<br>").Replace("\r\n",
+        "<br>"))</div>
+            </section>
+        }
+    }
+}
+
+@section Scripts {
+<script>
+    var element = document.getElementById("user-audiofile");
+    element.addEventListener("change", function (event) {
+        if (element.files[0] === undefined) {
+            document.getElementById("file-name").innerHTML = "هیچ فایلی انتخاب نشده";
+            document.getElementById("file-name").style.fontFamily = "main-font";
+            document.getElementById("file-name").style.direction = "rtl";
+        } else {
+            if (element.files[0].type != "audio/mpeg") {
+                alert("تنها فایل MP3 مجاز است!")
+                element.value = null;
+                document.getElementById("file-name").innerHTML = "هیچ فایلی انتخاب نشده";
+                document.getElementById("file-name").style.fontFamily = "main-font";
+                document.getElementById("file-name").style.direction = "rtl";
+            } else {
+                document.getElementById("file-name").innerHTML = element.files[0].name;
+                document.getElementById("file-name").style.fontFamily = "'Lucida Sans', Geneva, Verdana, sans-serif";
+                document.getElementById("file-name").style.direction = "ltr";
+            }
+        }
+    });
+</script>
+<script src="~/js/home.js"></script>
+}

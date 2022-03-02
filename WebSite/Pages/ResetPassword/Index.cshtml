@@ -1,0 +1,43 @@
+@page "/resetpassword"
+@model IndexModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/resetpassword.css">
+}
+
+<section id="reset-password"
+    class="l2-width-50 m2-width-70 s1-width-90 s1-margin-auto s1-display-flex-column s1-justify-content-center s1-flex-wrap s1-text-align-center">
+    <h3>
+        لطفا رمز عبور جدید خود را وارد کنید.
+    </h3>
+    <form method="post" id="reset-password-form" 
+        class="x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-row s1-justify-content-center l1-justify-content-space-between s1-flex-wrap">
+        <div class="s1-width-90 s1-display-flex-row s1-justify-content-space-between s1-align-items-center">
+            <div class="s1-width-30">
+                <label asp-for="ViewModel!.Password">@Html.DisplayNameFor(model =>
+                    model.ViewModel!.Password)</label>
+            </div>
+            <div class="s1-width-60">
+                <input asp-for="ViewModel!.Password" class="s1-width-100" />
+            </div>
+        </div>
+        <div class="s1-width-90 s1-display-flex-row s1-justify-content-space-between s1-align-items-center">
+            <div class="s1-width-30">
+                <label asp-for="ViewModel!.ConfirmPassword">@Html.DisplayNameFor(model =>
+                    model.ViewModel!.ConfirmPassword)</label>
+            </div>
+            <div class="s1-width-60">
+                <input asp-for="ViewModel!.ConfirmPassword" class="s1-width-100" />
+            </div>
+        </div>
+        <input type="hidden" name="ViewModel.Token" value='@ViewData["token"]' />
+        <input type="hidden" name="ViewModel.UserId" value='@ViewData["userId"]' />
+        <div class="s1-width-100 s1-display-flex-row s1-justify-content-center s1-align-items-center account-button">
+            <input type="submit" id="reset-password-submit" value="ارسال">
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <script src="~/js/reset-password.js"></script>
+}

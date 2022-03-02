@@ -1,0 +1,70 @@
+@page "/portal"
+@using Model
+@model IndexModel
+
+@section Styles {
+<link rel="stylesheet" href="/css/portal.css">
+}
+
+<section id="welcome"
+    class="x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-column s1-justify-content-center s1-align-items-center">
+    @{
+        if (HttpContext.User.Identity!.Name != null)
+        {
+            WriteLiteral($"{HttpContext.User.Identity.Name.ToUpper()} عزیز خوش آمدی");
+        }
+    }
+    <form method="post" asp-page="/SignOut/Index">
+        <input id="sign-out" type="submit" value="خروج از حساب">
+    </form>
+</section>
+
+<section id="enter-text"
+    class="x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-column s1-justify-content-center s1-align-items-center">
+    <button id="enter-text-button" class="m2-width-20 s1-width-50">
+        ایجاد متن جدید
+    </button>
+</section>
+@{
+    if (Model.UserNotes != null)
+    {
+        foreach (Note note in Model.UserNotes.Reverse())
+        {
+            <section
+        class="user-notes x1-width-50 m2-width-80 s1-width-90 s1-margin-auto s1-display-flex-column s1-justify-content-center s1-align-items-center">
+                <div class="s1-text-align-justify s1-width-100">@Html.Raw(note.Content!.Replace("\n", "<br>").Replace("\r\n", "<br>"))</div>
+                <div
+            class="m2-width-20 s1-width-50 s1-align-self-center s1-display-flex-row s1-justify-content-space-between edit-buttons-holder">
+                    <button class="s1-width-40 text-button edit">
+                        ویرایش
+                    </button>
+                    <button class="s1-width-40 text-button delete">
+                        حذف
+                    </button>
+                </div>
+                <input type="hidden" value="@note.Id" />
+            </section>
+        }
+    }
+}
+<div id="modal-background"
+    class="s1-display-flex-column s1-justify-content-center s1-align-items-center s1-display-none">
+    <div id="modal"
+        class="s1-width-80 s2-width-60 m2-width-40 l2-width-30 x1-width-20 s1-display-flex-column s1-justify-content-center s1-align-items-center">
+        <h3 class="s1-text-align-center">متن مورد نظر حذف خواهد شد. آیا مطمئن هستید؟</h3>
+        <div id="modal-buttons" class="s1-width-90 m1-width-60 x1-width-50 s1-display-flex-row s1-justify-content-space-between">
+            <button id="delete-confirm" class="s1-width-40 text-button">
+                حذف
+            </button>
+            <button id="delete-cancel" class="s1-width-40 text-button good-sign">
+                انصراف
+            </button>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" name="user-id" value='@(ViewData["userId"])'>
+
+@section Scripts {
+<script src="~/js/portal.js"></script>
+}
