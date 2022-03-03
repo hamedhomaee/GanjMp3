@@ -35,8 +35,14 @@ public class IndexModel : PageModel
             {
             }
 
-            if(user == null)
-                user = await _context!.Users!.SingleAsync<SiteUser>(u => u.Email == model.NameOrEmail);
+            try
+            {
+                if (user == null)
+                    user = await _context!.Users!.SingleAsync<SiteUser>(u => u.Email == model.NameOrEmail);
+            }
+            catch
+            {
+            }
 
             if (user != null)
             {
